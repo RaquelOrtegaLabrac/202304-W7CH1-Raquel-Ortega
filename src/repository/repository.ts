@@ -1,10 +1,10 @@
 import fs from 'fs/promises';
 import createDebug from 'debug';
-import { Subject } from '../entities/sample.js';
+import { Subject } from '../entities/subject.js';
 import { Repo } from './repo.js';
 import { HttpError } from '../types/http.error.js';
 
-const debug = createDebug('W6:SampleRepo');
+const debug = createDebug('W6:DataRepo');
 
 const file = './data.json';
 
@@ -29,30 +29,37 @@ export class DataRepo implements Repo<Subject> {
     return result;
   }
 
-  async addSubject(subject: Subject) {
-    const stringData = await fs.readFile(file, { encoding: 'utf-8' });
-    const subjectData = JSON.parse(stringData) as Subject[];
-    const newSubjectList = JSON.stringify([...subjectData, subject]);
-    await fs.writeFile(file, newSubjectList, {
-      encoding: 'utf-8',
-    });
+  async create(data: Omit<Subject, 'id'>) {
+    const aData = await this.query();
+    const newSubject: Subject = { ...data, id: createID() };
+    const result = JSON.stringify([...aData, newSubject]);
+    await fs.writeFile(file, result, { encoding: 'utf8' });
+    return newSubject;
   }
 
-  async update(id: string, newSubject: Subject) {
-    const stringData = await fs.readFile(file, { encoding: 'utf-8' });
-    const subjectData = JSON.parse(stringData) as Subject[];
-    const updatedList = subjectData.map((item) =>
-      item.id === id ? { ...item, ...newSubject } : item
-    );
-    const updatedFile = JSON.stringify(updatedList);
-    await fs.writeFile(file, updatedFile, { encoding: 'utf-8' });
+  async update(id: string, data: Partial<Subject>) {
+    const aData = await this.query();
+    let newSubject: Subject = {} as Subject;
+    const result = aData.map((item) => {
+      if (item.id === id) {
+        newSubject = { ...item, ...data };
+        return newSubject;
+      }
+
+      return item;
+    });
+    if (!newSubject!.id)
+      throw new HttpError(404, 'Not found', 'Bad id for the update');
+
+    await fs.writeFile(file, JSON.stringify(result), { encoding: 'utf8' });
   }
 
   async delete(id: string) {
-    const stringData = await fs.readFile(file, { encoding: 'utf-8' });
-    const subjectData = JSON.parse(stringData) as Subject[];
-    const updatedList = subjectData.filter((item) => item.id !== id);
-    const updatedFile = JSON.stringify(updatedList);
-    await fs.writeFile(file, updatedFile, { encoding: 'utf-8' });
+    const aData = await this.query();
+    const result = aData.filter((item) => item.id !== id);
+    if (aData.length === result.length)
+      throw new HttpError(404, 'Not found', 'Bad id for the delete');
+
+    await fs.writeFile(file, JSON.stringify(result), { encoding: 'utf8' });
   }
 }
