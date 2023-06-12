@@ -2,8 +2,10 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
-const debug = createDebug('W6:App');
 import { dataRouter } from './router.js';
+import { errorHandler } from './middleware/error.js';
+
+const debug = createDebug('W6:App');
 
 export const app = express();
 
@@ -26,3 +28,5 @@ app.get('/', (request, response) => {
 });
 
 app.use('/data', dataRouter);
+
+app.use(errorHandler);
