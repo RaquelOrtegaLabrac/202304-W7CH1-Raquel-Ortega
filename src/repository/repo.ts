@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export interface Repo<T extends { id: string | number }> {
   query: () => Promise<T[]>;
   queryById: (id: T['id']) => Promise<T>;

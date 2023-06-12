@@ -52,6 +52,7 @@ export class DataRepo implements Repo<Subject> {
       throw new HttpError(404, 'Not found', 'Bad id for the update');
 
     await fs.writeFile(file, JSON.stringify(result), { encoding: 'utf8' });
+    return newSubject;
   }
 
   async delete(id: string) {
