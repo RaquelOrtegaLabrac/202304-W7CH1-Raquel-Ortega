@@ -1,4 +1,4 @@
-export type Sample = {
+export type Subject = {
   id: string;
   name: string;
 };

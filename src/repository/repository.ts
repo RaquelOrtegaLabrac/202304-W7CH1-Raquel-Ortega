@@ -1,11 +1,8 @@
 import fs from 'fs/promises';
 import createDebug from 'debug';
 const debug = createDebug('W6:SampleRepo');
-
-type Subject = {
-  id: string;
-  name: string;
-};
+import { Subject } from '../entities/sample.js';
+import { Repo } from './repo.js';
 
 const file = './data.json';
 

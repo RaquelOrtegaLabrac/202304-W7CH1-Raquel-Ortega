@@ -1,5 +1,7 @@
 import { Router as createRouter } from 'express';
 import { DataController } from './controller.js';
+import { Subject } from './entities/sample.js';
+import { Repo } from './repository/repo.js';
 
 const controller = new DataController();
 export const dataRouter = createRouter();
