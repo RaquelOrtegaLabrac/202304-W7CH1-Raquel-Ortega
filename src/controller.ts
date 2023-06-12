@@ -1,18 +1,20 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { DataRepo } from './repository/repository.js';
 import createDebug from 'debug';
 const debug = createDebug('W6:DataController');
 
 export class DataController {
-  repo: DataRepo;
-  constructor() {
-    this.repo = new DataRepo();
+  constructor(private repo: DataRepo) {
     debug('Instantiated DataController');
     debug(this.repo);
   }
 
-  async getAll(_request: Request, response: Response) {
-    response.send(await this.repo.readAll());
+  async getAll(request: Request, response: Response, next: NextFunction) {
+    try {
+      response.send(await this.repo.query());
+    } catch (error) {
+      next(error);
+    }
   }
 
   async getById(request: Request, response: Response) {
