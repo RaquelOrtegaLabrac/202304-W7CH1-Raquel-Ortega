@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
-import { dataRouter } from './router.js';
+import { dataRouter } from './routers/router.js';
 import { errorHandler } from './middleware/error.js';
 
 const debug = createDebug('W6:App');
