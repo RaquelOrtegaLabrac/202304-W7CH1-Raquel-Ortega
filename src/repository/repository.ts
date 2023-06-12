@@ -1,17 +1,21 @@
 import fs from 'fs/promises';
 import createDebug from 'debug';
-const debug = createDebug('W6:SampleRepo');
 import { Subject } from '../entities/sample.js';
 import { Repo } from './repo.js';
 
+const debug = createDebug('W6:SampleRepo');
+
 const file = './data.json';
 
-export class DataRepo {
+const createID = (): Subject['id'] =>
+  Math.trunc(Math.random() * 1_000_000).toString();
+
+export class DataRepo implements Repo<Subject> {
   constructor() {
     debug('Data Repo');
   }
 
-  async readAll() {
+  async query() {
     const stringData = await fs.readFile(file, { encoding: 'utf-8' });
     const aData = JSON.parse(stringData) as Subject[];
     return aData;
