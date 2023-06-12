@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataRepo } from './repository.js';
+import { DataRepo } from './repository/repository.js';
 import createDebug from 'debug';
 const debug = createDebug('W6:DataController');
 
