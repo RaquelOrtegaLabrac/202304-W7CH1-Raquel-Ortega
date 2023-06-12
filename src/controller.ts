@@ -25,18 +25,30 @@ export class DataController {
     }
   }
 
-  async post(request: Request, response: Response) {
-    await this.repo.addSubject(request.body);
-    response.send('New subject added.');
+  async post(request: Request, response: Response, next: NextFunction) {
+    try {
+      response.status(201);
+      response.send(await this.repo.create(request.body));
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async patch(request: Request, response: Response) {
-    await this.repo.update(request.params.id, request.body);
-    response.send('The subject has been updated.');
+  async patch(request: Request, response: Response, next: NextFunction) {
+    try {
+      response.status(202);
+      response.send(await this.repo.update(request.params.id, request.body));
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async deleteById(request: Request, response: Response) {
-    await this.repo.delete(request.params.id);
-    response.send('The subject has been removed.');
+  async deleteById(request: Request, response: Response, next: NextFunction) {
+    try {
+      response.status(204);
+      response.send(await this.repo.delete(request.params.id));
+    } catch (error) {
+      next(error);
+    }
   }
 }
