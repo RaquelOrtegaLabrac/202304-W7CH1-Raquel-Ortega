@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { DataRepo } from './repository/repository.js';
+import { DataRepo } from '../repository/repository.js';
 import createDebug from 'debug';
 const debug = createDebug('W6:DataController');
 
 export class DataController {
+  // eslint-disable-next-line no-unused-vars
   constructor(private repo: DataRepo) {
     debug('Instantiated DataController');
     debug(this.repo);
