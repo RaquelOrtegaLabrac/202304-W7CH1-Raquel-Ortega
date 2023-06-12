@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import createDebug from 'debug';
 import { Subject } from '../entities/sample.js';
 import { Repo } from './repo.js';
+import { HttpError } from '../types/http.error.js';
 
 const debug = createDebug('W6:SampleRepo');
 
@@ -21,11 +22,10 @@ export class DataRepo implements Repo<Subject> {
     return aData;
   }
 
-  async readById(id: string) {
-    const stringData = await fs.readFile(file, { encoding: 'utf-8' });
-    const subjectData = JSON.parse(stringData) as Subject[];
-    const result = subjectData.find((item) => item.id === id);
-    if (!result) throw new Error();
+  async queryById(id: string) {
+    const aData = await this.query();
+    const result = aData.find((item) => item.id === id);
+    if (!result) throw new HttpError(404, 'Not found', 'Bad id for the query');
     return result;
   }
 

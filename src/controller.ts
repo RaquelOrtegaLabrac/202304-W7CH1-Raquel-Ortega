@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { DataRepo } from './repository/repository.js';
 import createDebug from 'debug';
 const debug = createDebug('W6:DataController');
@@ -17,8 +17,12 @@ export class DataController {
     }
   }
 
-  async getById(request: Request, response: Response) {
-    response.send(await this.repo.readById(request.params.id));
+  async getById(request: Request, response: Response, next: NextFunction) {
+    try {
+      response.send(await this.repo.queryById(request.params.id));
+    } catch (error) {
+      next(error);
+    }
   }
 
   async post(request: Request, response: Response) {
