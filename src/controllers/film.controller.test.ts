@@ -47,7 +47,7 @@ describe('Given FilmController class', () => {
   });
 });
 
-describe('Given a thing controller', () => {
+describe('Given a film controller', () => {
   const error = new Error('Test Error');
   const mockRepo = {
     query: jest.fn().mockRejectedValue(error),
