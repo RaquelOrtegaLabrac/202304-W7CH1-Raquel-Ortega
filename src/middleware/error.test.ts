@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpError } from '../types/http.error';
-import { errorHandler } from './error';
+import { HttpError } from '../types/http.error.js';
+import { errorHandler } from './error.js';
 
 describe('Given the handleError middleware', () => {
   describe('When it is instantiate with a HttpError', () => {

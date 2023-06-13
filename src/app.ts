@@ -2,14 +2,15 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
-import { dataRouter } from './routers/router.js';
+import { dataRouter } from './routers/subject.router.js';
 import { errorHandler } from './middleware/error.js';
+import { filmRouter } from './routers/film.router.js';
 
 const debug = createDebug('W6:App');
 
 export const app = express();
 
-debug('Loaded Express');
+debug('Start Express app');
 const corsOptions = {
   origin: '*',
 };
@@ -28,5 +29,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/data', dataRouter);
+app.use('/films', filmRouter);
 
 app.use(errorHandler);

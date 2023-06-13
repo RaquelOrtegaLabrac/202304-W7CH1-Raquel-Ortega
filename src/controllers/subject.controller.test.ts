@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { DataRepo } from '../repository/repository';
-import { DataController } from './controller';
+import { Subject } from '../repository/subject.repository.js';
+import { DataController } from './subject.controller.js';
 describe('Given SubjectController class', () => {
   describe('When it is instantiated', () => {
-    const mockRepo: DataRepo = {
+    const mockRepo: Subject = {
       query: jest.fn(),
       queryById: jest.fn(),
       create: jest.fn(),

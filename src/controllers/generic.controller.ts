@@ -1,14 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { DataRepo } from '../repository/repository.js';
-import createDebug from 'debug';
-const debug = createDebug('W6:DataController');
+import { Repo } from '../repository/repo.js';
 
-export class DataController {
-  // eslint-disable-next-line no-unused-vars
-  constructor(private repo: DataRepo) {
-    debug('Instantiated DataController');
-    debug(this.repo);
-  }
+export abstract class Controller<T extends { id: string | number }> {
+  protected repo!: Repo<T>;
 
   async getAll(request: Request, response: Response, next: NextFunction) {
     try {

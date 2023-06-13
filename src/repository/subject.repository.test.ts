@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-import { DataRepo } from './repository';
+import { DataRepo } from './subject.repository.js';
 
 jest.mock('fs/promises');
 

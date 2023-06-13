@@ -1,9 +1,9 @@
 import fs from 'fs/promises';
-import createDebug from 'debug';
 import { Subject } from '../entities/subject.js';
 import { Repo } from './repo.js';
 import { HttpError } from '../types/http.error.js';
 
+import createDebug from 'debug';
 const debug = createDebug('W6:DataRepo');
 
 const file = './data.json';
