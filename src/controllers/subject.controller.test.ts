@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { Subject } from '../repository/subject.repository.js';
+import { DataRepo } from '../repository/subject.repository.js';
 import { DataController } from './subject.controller.js';
 describe('Given SubjectController class', () => {
   describe('When it is instantiated', () => {
-    const mockRepo: Subject = {
+    const mockRepo: DataRepo = {
       query: jest.fn(),
       queryById: jest.fn(),
       create: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
-    };
+    } as DataRepo;
     const req = {
       params: { id: 1 },
     } as unknown as Request;
@@ -27,6 +27,21 @@ describe('Given SubjectController class', () => {
       await controller.getById(req, res, next);
       expect(res.send).toHaveBeenCalled();
       expect(mockRepo.queryById).toHaveBeenCalled();
+    });
+    test('Then method post should be used', async () => {
+      await controller.post(req, res, next);
+      expect(res.send).toHaveBeenCalled();
+      expect(mockRepo.create).toHaveBeenCalled();
+    });
+    test('Then method patch should be used', async () => {
+      await controller.patch(req, res, next);
+      expect(res.send).toHaveBeenCalled();
+      expect(mockRepo.update).toHaveBeenCalled();
+    });
+    test('Then method delete should be used', async () => {
+      await controller.deleteById(req, res, next);
+      expect(res.send).toHaveBeenCalled();
+      expect(mockRepo.delete).toHaveBeenCalled();
     });
   });
 });
