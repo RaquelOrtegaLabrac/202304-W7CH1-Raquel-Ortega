@@ -7,7 +7,7 @@ const filmSchema = new Schema<Film>({
     required: true,
     unique: true,
   },
-  author: {
+  duration: {
     type: String,
     required: true,
   },
