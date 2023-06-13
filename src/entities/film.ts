@@ -1,5 +1,5 @@
-export type Film = {
+export type Book = {
   id: string;
-  author: string;
   title: string;
+  duration: string;
 };
