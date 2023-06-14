@@ -12,8 +12,5 @@ const repo: Repo<User> = new UserRepo() as Repo<User>;
 const controller = new UserController(repo);
 export const userRouter = createRouter();
 
-// DataRouter.get('/', controller.getAll.bind(controller));
-// dataRouter.get('/:id', controller.getById.bind(controller));
 userRouter.post('/register', controller.register.bind(controller));
 userRouter.patch('/login', controller.login.bind(controller));
-// DataRouter.delete('/:id', controller.deleteById.bind(controller));

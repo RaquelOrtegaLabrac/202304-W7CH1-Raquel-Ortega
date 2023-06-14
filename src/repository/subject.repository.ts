@@ -48,7 +48,7 @@ export class DataRepo implements Omit<Repo<Subject>, 'search'> {
 
       return item;
     });
-    if (!newSubject!.id)
+    if (!newSubject.id)
       throw new HttpError(404, 'Not found', 'Bad id for the update');
 
     await fs.writeFile(file, JSON.stringify(result), { encoding: 'utf8' });
