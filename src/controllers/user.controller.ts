@@ -26,7 +26,7 @@ export class UserController {
   async login(request: Request, response: Response, next: NextFunction) {
     try {
       if (!request.body.user || !request.body.password) {
-        throw new HttpError(400, 'Bad request', 'User or password invalid(1)');
+        throw new HttpError(400, 'Bad request', 'User or password invalid (1)');
       }
 
       let data = await this.repo.search({
@@ -53,8 +53,6 @@ export class UserController {
       }
 
       response.send(data[0]);
-
-      debug('User logged');
     } catch (error) {
       next(error);
     }

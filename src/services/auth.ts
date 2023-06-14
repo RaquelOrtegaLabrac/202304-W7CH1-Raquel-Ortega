@@ -1,12 +1,12 @@
 import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { secret } from '../config';
-import { HttpError } from '../types/http.error';
+import { secret } from '../config.js';
+import { HttpError } from '../types/http.error.js';
 
 type PayloadToken = {
   id: string;
   username: string;
-} & JwtPayload;
+} & jwt.JwtPayload;
 export class AuthServices {
   private static salt = 10;
 

@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { HttpError } from '../types/http.error.js';
-import { mongo } from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
+
+import createDebug from 'debug';
+const debug = createDebug('W6:ErrorMiddleware');
 
 export const errorHandler = (
   error: Error,
@@ -8,7 +11,7 @@ export const errorHandler = (
   response: Response,
   _next: NextFunction
 ) => {
-  console.log('Error Middleware');
+  debug('Executed');
 
   if (error instanceof HttpError) {
     console.error(error.status, error.statusMessage, error.message);
@@ -21,7 +24,7 @@ export const errorHandler = (
     return;
   }
 
-  if (error instanceof mongo.MongoServerError) {
+  if (error instanceof mongoose.Error.ValidationError) {
     console.error('400 Bad request', error.message);
     response.status(400);
     response.statusMessage = 'Bad request';
@@ -43,7 +46,7 @@ export const errorHandler = (
     return;
   }
 
-  debug(error);
+  console.error(error);
   response.status(500);
   response.send({
     error: error.message,
