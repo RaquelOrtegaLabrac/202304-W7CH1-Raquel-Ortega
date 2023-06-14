@@ -3,7 +3,7 @@ import { DataRepo } from '../repository/subject.repository.js';
 import { DataController } from './subject.controller.js';
 describe('Given SubjectController class', () => {
   describe('When it is instantiated', () => {
-    const mockRepo: DataRepo = {
+    const mockRepo: {
       query: jest.fn(),
       queryById: jest.fn(),
       create: jest.fn(),
@@ -51,10 +51,11 @@ describe('Given a Datacontroller', () => {
   const mockRepo = {
     query: jest.fn().mockRejectedValue(error),
     queryById: jest.fn().mockRejectedValue(error),
+    search: jest.fn().mockRejectedValue(error),
     create: jest.fn().mockRejectedValue(error),
     update: jest.fn().mockRejectedValue(error),
     delete: jest.fn().mockRejectedValue(error),
-  } as DataRepo;
+  } as unknown as Repo<Subject>;
 
   const req = {
     params: { id: '1' },

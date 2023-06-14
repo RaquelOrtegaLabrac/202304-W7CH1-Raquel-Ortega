@@ -8,7 +8,7 @@ import createDebug from 'debug';
 const debug = createDebug('W6:SampleRouter');
 
 debug('Executed');
-const repo: Repo<Subject> = new DataRepo();
+const repo: Repo<Subject> = new DataRepo() as Repo<Subject>;
 const controller = new DataController(repo);
 export const dataRouter = createRouter();
 

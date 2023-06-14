@@ -21,9 +21,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use((_req, _res, next) => {
-  debug('Soy un middleware');
+  debug('');
   next();
 });
+
+app.use(express.static('public'));
 
 app.get('/', (request, response) => {
   response.send('Hello Express!');
