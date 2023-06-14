@@ -11,7 +11,7 @@ const file = './data.json';
 const createID = (): Subject['id'] =>
   Math.trunc(Math.random() * 1_000_000).toString();
 
-export class DataRepo implements Repo<Subject> {
+export class DataRepo implements Omit<Repo<Subject>, 'search'> {
   constructor() {
     debug('Data Repo');
   }

@@ -5,6 +5,7 @@ import createDebug from 'debug';
 import { dataRouter } from './routers/subject.router.js';
 import { errorHandler } from './middleware/error.js';
 import { filmRouter } from './routers/film.router.js';
+import { userRouter } from './routers/user.router.js';
 
 const debug = createDebug('W6:App');
 
@@ -30,5 +31,6 @@ app.get('/', (request, response) => {
 
 app.use('/data', dataRouter);
 app.use('/films', filmRouter);
+app.use('/user', userRouter);
 
 app.use(errorHandler);

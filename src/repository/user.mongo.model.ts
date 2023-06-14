@@ -1,25 +1,30 @@
 import { Schema, model } from 'mongoose';
-import { Film } from '../entities/film.js';
+import { User } from '../entities/user.js';
 
-const filmSchema = new Schema<Film>({
-  title: {
+const userSchema = new Schema<User>({
+  userName: {
     type: String,
     required: true,
     unique: true,
   },
-  duration: {
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
     type: String,
     required: true,
   },
 });
 
-filmSchema.set('toJSON', {
+userSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject.__v;
     delete returnedObject._id;
-    // Delete returnedObject.password;
+    delete returnedObject.password;
   },
 });
 
-export const FilmModel = model('Film', filmSchema, 'films');
+export const UserModel = model('User', userSchema, 'users');

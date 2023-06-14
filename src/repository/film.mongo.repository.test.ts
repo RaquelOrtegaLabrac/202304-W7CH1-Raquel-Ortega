@@ -1,38 +1,37 @@
-import { FilmRepo } from './films.mongo.repository.js';
-import { FilmModel } from './film.mongo.model.js';
+import { Film } from '../entities/film';
+import { FilmModel } from './film.mongo.model';
+import { FilmRepo } from './films.mongo.repository';
 
 jest.mock('./film.mongo.model.js');
 
-// (FilmModel as unknown as jest.Mock).mockReturnValue({
-//   find: jest.fn().mockResolvedValueOnce({
-//     exec: jest.fn().mockResolvedValue([]),
-//   }),
-//   findById: jest.fn(),
-//   create: jest.fn(),
-//   findByIdAndUpdate: jest.fn(),
-//   findByIdAndDelete: jest.fn(),
-// });
-describe('Given FilmRepo Class', () => {
-  describe('When I instantiate it', () => {
-    const repo = new FilmRepo();
+describe('Given a FilmRepo class', () => {
+  const repo = new FilmRepo();
 
-    test('Then method query should be used', async () => {
+  describe('When it is instantiated and query method is called', () => {
+    test('Then FilmModel.find should have been called', async () => {
+      const exec = jest.fn().mockResolvedValue([]);
       FilmModel.find = jest.fn().mockReturnValueOnce({
-        exec: jest.fn().mockResolvedValue([]),
+        exec,
       });
       const result = await repo.query();
       expect(FilmModel.find).toHaveBeenCalled();
+      expect(exec).toHaveBeenCalled();
       expect(result).toEqual([]);
     });
+  });
 
-    // Test('Then method queryById should be used', async () => {
-    //   const mockSubject = [{ id: '1' }];
-    //   (fs.readFile as jest.Mock).mockResolvedValueOnce(
-    //     JSON.stringify(mockSubject)
-    //   );
-    //   const result = await repo.queryById('1');
-    //   expect(fs.readFile).toHaveBeenCalled();
-    //   expect(result).toEqual(mockSubject[0]);
-    // });
+  describe('When it is instantiatied and queryById method is called', () => {
+    test('Then FilmModel.findById should have been called', async () => {
+      const mockedFilm = { id: '1' } as Film;
+      const mockedId = '1';
+      const exec = jest.fn().mockResolvedValue([mockedFilm]);
+      FilmModel.findById = jest.fn().mockReturnValueOnce({
+        exec,
+      });
+      const result = await repo.queryById(mockedId);
+      expect(FilmModel.findById).toHaveBeenCalled();
+      expect(exec).toHaveBeenCalled();
+      expect(result).toEqual([mockedFilm]);
+    });
   });
 });
