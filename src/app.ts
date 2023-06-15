@@ -32,7 +32,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/data', dataRouter);
-app.use('/films', filmRouter);
+app.use('/film', filmRouter);
 app.use('/user', userRouter);
 
 app.use(errorHandler);

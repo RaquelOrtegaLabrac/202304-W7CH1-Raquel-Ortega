@@ -1,12 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import { Repo } from '../repository/repo.js';
+import { ApiResponse } from '../types/response.api.js';
 
 export abstract class Controller<T extends { id: string | number }> {
   protected repo!: Repo<T>;
 
   async getAll(request: Request, response: Response, next: NextFunction) {
     try {
-      response.send(await this.repo.query());
+      const items = await this.repo.query();
+      const res: ApiResponse = {
+        items,
+        page: 1,
+        count: items.length,
+      };
+      response.send(res);
     } catch (error) {
       next(error);
     }
