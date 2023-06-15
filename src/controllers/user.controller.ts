@@ -33,6 +33,7 @@ export class UserController {
         key: 'userName',
         value: request.body.user,
       });
+
       if (!data.length) {
         data = await this.repo.search({
           key: 'email',
